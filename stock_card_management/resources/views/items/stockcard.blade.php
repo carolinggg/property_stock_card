@@ -63,32 +63,33 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($stocks as $stock)
-                @php
-                    $hasIssuance = false;
-                @endphp
+    @foreach ($stocks as $stock)
+        <tr>
+            <td>{{ $stock->created_at->format('Y-m-d') }}</td>
+            <td>{{ $stock->reference ?? '' }}</td>
+            <td>{{ $stock->receipt_qty ?? $stock->quantity }}</td>
+            <td></td> <!-- No issuance here -->
+            <td></td>
+            <td>{{ $stock->quantity }}</td>
+            <td>{{ $stock->no_of_days_consume ?? '' }}</td>
+        </tr>
 
+        @foreach ($issuances as $issuance)
+            @if ($issuance->item_id == $item->id && $issuance->created_at->isSameDay($stock->created_at))
+                <tr>
+                    <td>{{ $issuance->created_at->format('Y-m-d') }}</td>
+                    <td>{{ $issuance->reference ?? '' }}</td>
+                    <td></td> <!-- Receipt Qty not applicable for issuance -->
+                    <td>{{ $issuance->qty_issued }}</td>
+                    <td>{{ $issuance->office }}</td>
+                    <td>{{ $issuance->balance_qty }}</td>
+                    <td>{{ $issuance->no_of_days ?? '' }}</td>
+                </tr>
+            @endif
+        @endforeach
+    @endforeach
+</tbody>
 
-                <!-- Then show issuances -->
-                @foreach ($issuances as $issuance)
-                    @if ($issuance->item_id == $item->id && $issuance->created_at->isSameDay($stock->created_at))
-                        @php
-                            $hasIssuance = true;
-                        @endphp
-                        <tr>
-                            <td>{{ $issuance->created_at->format('Y-m-d') }}</td> <!-- Issuance Date -->
-                            <td>{{ $issuance->reference ?? '' }}</td> <!-- Reference -->
-                            <td></td> <!-- No receipt quantity in issuance -->
-                            <td>{{ $issuance->qty_issued }}</td> <!-- Issuance quantity -->
-                            <td>{{ $issuance->office }}</td> <!-- Office -->    
-                            <td>{{ $issuance->balance_qty }}</td> <!-- Balance after issuance -->
-                            <td>{{ $issuance->no_of_days ?? '' }}</td> <!-- Days consumed (optional) -->
-                        </tr>
-                    @endif
-                @endforeach
-
-            @endforeach
-        </tbody>
     </table>
 
 </body>

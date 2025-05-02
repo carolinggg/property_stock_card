@@ -30,7 +30,9 @@ class ItemController extends Controller
         $validated = $request->validate([
             'item_name' => 'required|string|max:255',
             'item_description' => 'nullable|string|max:255',
+            'supply_type' => 'required|in:Office Supply,Medical Supply,Janitorial Supply',
         ]);
+        
     
         // Create the item in the database
         Item::create($validated);
@@ -58,11 +60,12 @@ class ItemController extends Controller
 
     // Update the specified resource in storage.
     public function update(Request $request, $id)
-{
+    {
     // Validate the request input (no 'unit_cost' anymore)
     $validated = $request->validate([
         'item_name' => 'required|string|max:255',
         'item_description' => 'nullable|string|max:255',
+        'supply_type' => 'required|in:Office Supply,Medical Supply,Janitorial Supply',
     ]);
 
     // Find the item by ID or return 404 if not found
@@ -71,7 +74,7 @@ class ItemController extends Controller
 
     // Redirect back to the items list
     return redirect()->route('items.index');
-}
+    }
     // Remove the specified resource from storage.
     public function destroy($id)
     {
@@ -82,20 +85,14 @@ class ItemController extends Controller
         // Redirect back to the items list
         return redirect()->route('items.index');
     }
-
-    public function stockcard($id)
+    public function stockcard(Item $item)
     {
-        $item = Item::findOrFail($id);
- // Fetch stocks for this item
- $stocks = Stock::where('item_id', $id)->get();
-
- // Fetch issuances for this item
- $issuances = Issuance::where('item_id', $id)->get();
-
-
-        return view('items.stockcard', compact('item', 'stocks', 'issuances'));
-
+        // Retrieve all stocks and issuances associated with the item
+        $stocks = Stock::where('item_id', $item->id)->get();
+        $issuances = Issuance::where('item_id', $item->id)->get();
         
+        // Pass the item, stocks, and issuances to the view
+        return view('items.stockcard', compact('item', 'stocks', 'issuances'));
     }
-
+    
 }

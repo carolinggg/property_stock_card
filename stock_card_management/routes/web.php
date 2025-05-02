@@ -22,3 +22,6 @@ Route::resource('issuances', IssuanceController::class);
 //VIEW STOCK CARD
 Route::get('/items/{item}/stockcard', [App\Http\Controllers\ItemController::class, 'stockcard'])->name('items.stockcard');
 
+use App\Http\Controllers\InventoryController;
+
+Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');

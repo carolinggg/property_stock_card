@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,10 +9,16 @@ class Stock extends Model
 {
     use HasFactory;
 
+    // Specify which attributes are mass assignable
     protected $fillable = [
         'item_id',
         'quantity',
-        'unit_cost'
+        'unit_cost',
+        'reference',
+        'receipt_qty',
+        'no_of_days_consume',
+        'unit',
+        'supply_from',
     ];
 
     // Define the relationship with the Item model

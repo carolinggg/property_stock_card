@@ -27,8 +27,13 @@ public function store(Request $request)
     // Validate the input
     $validated = $request->validate([
         'item_id' => 'required|exists:items,id',
-        'quantity' => 'required|integer',
+        'quantity' => 'required|numeric',
         'unit_cost' => 'required|numeric',
+        'reference' => 'nullable|string',
+        'receipt_qty' => 'nullable|numeric',
+        'no_of_days_consume' => 'nullable|numeric',
+        'unit' => 'nullable|string',
+        'supply_from' => 'required|in:purchased,received',
     ]);
 
     // Calculate total_cost before storing
@@ -63,30 +68,39 @@ public function store(Request $request)
     }
     
     public function update(Request $request, $id)
-{
-    // Validate the input
-    $validated = $request->validate([
-        'quantity' => 'required|integer|min:1',
-        'unit_cost' => 'required|numeric|min:0',
-    ]);
-
-    // Retrieve the stock entry
-    $stock = Stock::findOrFail($id);
-
-    // Add the new quantity to the existing stock
-    $stock->quantity += $validated['quantity'];
-
-    // Update the unit cost
-    $stock->unit_cost = $validated['unit_cost'];
-
-    // Save the updated stock record (total_cost will be auto-calculated)
-    $stock->save();
-
-    // Redirect back to the stock index page with a success message
-    return redirect()->route('stocks.index')->with('success', 'Stock updated successfully.');
-}
-
-
+    {
+        // Validate the input
+        $validated = $request->validate([
+            'item_id' => 'required|exists:items,id',
+            'quantity' => 'required|numeric',
+            'unit_cost' => 'required|numeric',
+            'reference' => 'nullable|string',
+            'receipt_qty' => 'nullable|numeric',
+            'no_of_days_consume' => 'nullable|numeric',
+            'unit' => 'nullable|string',
+            'supply_from' => 'required|in:purchased,received',
+        ]);
+    
+        // Retrieve the stock entry
+        $stock = Stock::findOrFail($id);
+    
+        // Add new quantity to existing stock
+        $stock->quantity += $validated['quantity'];
+    
+        // Update other fields
+        $stock->unit_cost = $validated['unit_cost'];
+        $stock->reference = $validated['reference'];
+        $stock->receipt_qty = $validated['receipt_qty'];
+        $stock->no_of_days_consume = $validated['no_of_days_consume'];
+        $stock->unit = $validated['unit'];
+        $stock->supply_from = $validated['supply_from'];
+    
+        // Save the changes
+        $stock->save();
+    
+        return redirect()->route('stocks.index')->with('success', 'Stock updated successfully.');
+    }
+    
     // Remove the specified resource from storage.
     public function destroy($id)
     {
