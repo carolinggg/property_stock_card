@@ -1,5 +1,3 @@
-
-
 @foreach ($stocksByCategory as $category => $stocksBySupplyType)
     <h2>{{ ucfirst($category) }} Inventory</h2> <!-- Display the category name -->
     
@@ -32,7 +30,13 @@
                         <td>{{ $stock->issued_count }}</td>
                         <td>{{ $stock->total_quantity }}</td>
                         <td>{{ number_format($stock->unit_cost, 2) }}</td>
-                        <td>{{ number_format($stock->total_amount, 2) }}</td>
+                        <td>
+                            @if(is_null($stock->supply_from))
+                                {{ number_format($stock->total_quantity * $stock->unit_cost, 2) }} <!-- If supply_from is null, use the custom total calculation -->
+                            @else
+                                {{ number_format($stock->total_amount, 2) }} <!-- Otherwise, use the computed total amount -->
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
