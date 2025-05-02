@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 02, 2025 at 04:20 AM
+-- Generation Time: May 02, 2025 at 04:45 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -49,7 +49,8 @@ INSERT INTO `issuances` (`id`, `item_id`, `office`, `qty_issued`, `balance_qty`,
 (5, 1, 'EE', 1, 0, '2025-04-27 04:05:22', '2025-04-27 04:05:22'),
 (6, 1, 'EE', 1, 16, '2025-04-27 04:17:24', '2025-04-27 04:17:24'),
 (7, 1, 'Archi', 1, 15, '2025-04-27 04:21:03', '2025-04-27 04:21:03'),
-(8, 4, 'Archi', 12, 88, '2025-05-01 07:44:27', '2025-05-01 07:44:27');
+(8, 4, 'Archi', 12, 88, '2025-05-01 07:44:27', '2025-05-01 07:44:27'),
+(9, 4, 'Clinic', 12, 76, '2025-05-01 18:33:50', '2025-05-01 18:33:50');
 
 -- --------------------------------------------------------
 
@@ -104,7 +105,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (7, '2025_04_27_115724_add_balance_qty_to_issuances_table', 4),
 (8, '2025_05_01_134340_add_supply_type_to_items_table', 5),
 (9, '2025_05_01_135258_update_supply_type_in_items_table', 6),
-(10, '2025_05_01_142215_add_supply_from_to_stocks_table', 7);
+(10, '2025_05_01_142215_add_supply_from_to_stocks_table', 7),
+(11, '2025_05_02_022442_add_ris_number_to_stocks_table', 8),
+(12, '2025_05_02_024232_make_supply_from_nullable_in_stocks_table', 9);
 
 -- --------------------------------------------------------
 
@@ -126,10 +129,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('2IZq5khQ8kA7dot8rH3AbV9IGRTMmRD9tnjDKKFB', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoib2NTNUtCb3hiM3Jtdkk2ODA5dXdPSW40UlF2bzNyNWM4WnFiTER4MiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9zdG9ja3MiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1745843984),
-('7SMhNtINGhfOEFUgwrJUIIGN6UAP3rot0FEj0ZiW', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiNlVsT0ZzN3liYWMxSjZEeGZNZkgyNlQ2U044NThpYjJqSm9VYk1GaSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9zdG9ja3MiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1746152122),
-('k2D1PHx95aH40JWmK0XSYLSTjlAFCd3tkHP24QEC', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiVWxFcXFuR1RBcFRKMDZQanlQQ3dRUm40Y1dOMDMzZnlQRUpweFBmZiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9pdGVtcy8xL3N0b2NrY2FyZCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1745756501),
-('UHpTmqDMd2aMm4PzqKO2FrypsRNdThTC7lyAlhYb', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiRDhFZmNDYkFDbHRtYUpsSXR6RGQwQ1VmN0tLbVROVkFQRGp1ZDJuUSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9pdGVtcy80L3N0b2NrY2FyZCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1746114303);
+('7SMhNtINGhfOEFUgwrJUIIGN6UAP3rot0FEj0ZiW', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiNlVsT0ZzN3liYWMxSjZEeGZNZkgyNlQ2U044NThpYjJqSm9VYk1GaSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9zdG9ja3MvMS9lZGl0Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1746153848);
 
 -- --------------------------------------------------------
 
@@ -146,21 +146,22 @@ CREATE TABLE `stocks` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `reference` varchar(255) DEFAULT NULL,
+  `ris_number` varchar(255) DEFAULT NULL,
   `receipt_qty` int(11) DEFAULT NULL,
   `no_of_days_consume` int(11) DEFAULT NULL,
   `unit` varchar(255) DEFAULT NULL,
-  `supply_from` enum('purchased','received') NOT NULL DEFAULT 'purchased'
+  `supply_from` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `stocks`
 --
 
-INSERT INTO `stocks` (`id`, `item_id`, `quantity`, `unit_cost`, `created_at`, `updated_at`, `reference`, `receipt_qty`, `no_of_days_consume`, `unit`, `supply_from`) VALUES
-(1, 1, 60, 12.00, '2025-04-26 22:24:16', '2025-05-01 06:42:01', NULL, NULL, NULL, 'box', 'purchased'),
-(2, 2, 1920, 231.00, '2025-04-28 04:17:34', '2025-05-01 07:09:10', NULL, NULL, NULL, 'ream', 'purchased'),
-(3, 2, 201, 231.00, '2025-05-01 06:30:04', '2025-05-01 18:15:22', 'PSU Lingayen', NULL, NULL, 'ream', 'received'),
-(4, 4, 88, 122.00, '2025-05-01 07:15:43', '2025-05-01 07:44:27', 'PSU Lingayen', NULL, NULL, 'bottle', 'received');
+INSERT INTO `stocks` (`id`, `item_id`, `quantity`, `unit_cost`, `created_at`, `updated_at`, `reference`, `ris_number`, `receipt_qty`, `no_of_days_consume`, `unit`, `supply_from`) VALUES
+(1, 1, 60, 12.00, '2025-04-26 22:24:16', '2025-05-01 06:42:01', NULL, NULL, NULL, NULL, 'box', 'purchased'),
+(2, 2, 1920, 231.00, '2025-04-28 04:17:34', '2025-05-01 07:09:10', NULL, NULL, NULL, NULL, 'ream', 'purchased'),
+(3, 2, 201, 231.00, '2025-05-01 06:30:04', '2025-05-01 18:15:22', 'PSU Lingayen', NULL, NULL, NULL, 'ream', 'received'),
+(4, 4, 152, 122.00, '2025-05-01 07:15:43', '2025-05-01 18:43:32', 'PSU Lingayen', NULL, NULL, NULL, 'bottle', NULL);
 
 --
 -- Indexes for dumped tables
@@ -208,7 +209,7 @@ ALTER TABLE `stocks`
 -- AUTO_INCREMENT for table `issuances`
 --
 ALTER TABLE `issuances`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `items`
@@ -220,13 +221,13 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `stocks`
 --
 ALTER TABLE `stocks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables

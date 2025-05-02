@@ -3,8 +3,13 @@
 
 <form action="{{ route('stocks.update', $stock->id) }}" method="POST">
     @csrf
-    @method('PUT') <!-- This tells Laravel we're updating an existing resource -->
-    
+    @method('PUT')
+
+    <div>
+        <label for="ris_number">RIS Number</label>
+        <input type="text" name="ris_number" value="{{ old('ris_number', $stock->ris_number) }}" placeholder="Enter RIS number (optional)">
+    </div>
+
     <div>
         <label for="item_id">Item</label>
         <select name="item_id" required>
@@ -48,16 +53,17 @@
 
     <div>
         <label for="supply_from">Supply From</label>
-        <select name="supply_from" required>
+        <select name="supply_from">
+            <option value="">-- Select --</option>
             <option value="purchased" @if(old('supply_from', $stock->supply_from) == 'purchased') selected @endif>Purchased</option>
             <option value="received" @if(old('supply_from', $stock->supply_from) == 'received') selected @endif>Received</option>
         </select>
+
     </div>
 
     <button type="submit">Update Stock</button>
 </form>
 
-<!-- Display Validation Errors (if any) -->
 @if ($errors->any())
     <div>
         <ul>

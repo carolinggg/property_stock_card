@@ -24,17 +24,18 @@ public function create()
 
 public function store(Request $request)
 {
-    // Validate the input
-    $validated = $request->validate([
-        'item_id' => 'required|exists:items,id',
-        'quantity' => 'required|numeric',
-        'unit_cost' => 'required|numeric',
-        'reference' => 'nullable|string',
-        'receipt_qty' => 'nullable|numeric',
-        'no_of_days_consume' => 'nullable|numeric',
-        'unit' => 'nullable|string',
-        'supply_from' => 'required|in:purchased,received',
-    ]);
+   // Validate the input
+$validated = $request->validate([
+    'ris_number' => 'nullable|string|max:255',
+    'item_id' => 'required|exists:items,id',
+    'quantity' => 'required|numeric',
+    'unit_cost' => 'required|numeric',
+    'reference' => 'nullable|string',
+    'receipt_qty' => 'nullable|numeric',
+    'no_of_days_consume' => 'nullable|numeric',
+    'unit' => 'nullable|string',
+'supply_from' => 'nullable|in:purchased,received',
+]);
 
     // Calculate total_cost before storing
     $validated['total_cost'] = $validated['quantity'] * $validated['unit_cost'];
@@ -78,7 +79,7 @@ public function store(Request $request)
             'receipt_qty' => 'nullable|numeric',
             'no_of_days_consume' => 'nullable|numeric',
             'unit' => 'nullable|string',
-            'supply_from' => 'required|in:purchased,received',
+            'supply_from' => 'nullable|in:purchased,received',
         ]);
     
         // Retrieve the stock entry

@@ -19,6 +19,7 @@ class Stock extends Model
         'no_of_days_consume',
         'unit',
         'supply_from',
+        'ris_number',
     ];
 
     // Define the relationship with the Item model
